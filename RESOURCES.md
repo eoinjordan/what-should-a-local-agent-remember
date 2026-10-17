@@ -4,7 +4,7 @@ Routed by what you need, not by what the talk had.
 
 ## Learn
 
-- [MongoDB Skill Badges](https://learn.mongodb.com/skills): sixty to ninety minutes each, Credly badge on completion. *AI Agents with MongoDB* and *Schema Design Patterns* follow this talk directly. A one-page study sheet for the first is in [study/](study/ai-agents-skill-badge-study-sheet.md), and [course-on-pi/](course-on-pi/README.md) runs its code on self-managed MongoDB.
+- [MongoDB Skill Badges](https://learn.mongodb.com/skills): sixty to ninety minutes each, Credly badge on completion. *Building AI Agents with MongoDB* and *Schema Design Patterns* follow this talk directly; *AI and Innovation: How MongoDB Enables a Resilient AI Strategy* is the strategy-level companion. A one-page study sheet for the first is in [study/](study/ai-agents-skill-badge-study-sheet.md), and [course-on-pi/](course-on-pi/README.md) runs its code on self-managed MongoDB.
 - *From Systems of Record to Agentic Systems of Action* (Packt, 2026), written by MongoDB practitioners: agent memory and working state, event-driven sync, controlled writeback, human oversight and auditability at enterprise scale. [mongodb.com/books](https://www.mongodb.com/books)
 
 ## The four doc pages behind the talk
