@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>What Should a Local Agent Remember? — one page</title>
+<style>
+@page { size: A4; margin: 12mm 14mm; }
+:root { --ink:#1a1a1a; --muted:#5c6670; --green:#00684a; --mint:#e3fcf7; --line:#d7dbe0; --code:#f3f6f4; }
+html,body { margin:0; color:var(--ink); font-family:"Segoe UI", Helvetica, Arial, sans-serif; font-size:11.6pt; line-height:1.36; }
+h1 { font-size:22pt; margin:0; letter-spacing:-.01em; }
+.sub { color:var(--muted); margin:2px 0 10px; font-size:11.5pt; }
+.three { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:8px 0 10px; }
+.three div { background:var(--mint); border:1px solid #b8e6d6; border-radius:6px; padding:7px 9px; }
+.three b { display:block; color:var(--green); font-size:11pt; margin-bottom:2px; }
+.grid { display:grid; grid-template-columns:1.05fr 1fr; gap:10px 14px; }
+h2 { font-size:10.5pt; margin:6px 0 3px; color:var(--green); text-transform:uppercase; letter-spacing:.05em; }
+pre { background:var(--code); border:1px solid var(--line); border-radius:5px; padding:6px 8px; margin:3px 0 7px; font:9.4pt/1.32 Consolas, "Courier New", monospace; white-space:pre; overflow:hidden; }
+p { margin:0 0 4px; }
+ul { margin:2px 0 6px 16px; padding:0; } li { margin:0 0 2px; }
+.foot { border-top:1px solid var(--line); margin-top:8px; padding-top:5px; color:var(--muted); font-size:8.8pt; display:flex; justify-content:space-between; gap:12px; }
+.q { color:var(--muted); font-style:italic; }
+</style></head><body>
+<h1>What Should a Local Agent Remember?</h1>
+<p class="sub">Saving state for agents running at the edge · Eoin Jordan · one page to take back on Monday</p>
+
+<div class="three">
+  <div><b>Model for the workload</b>Start with the questions the agent asks when things go wrong. The document's shape follows the questions, not the data.</div>
+  <div><b>Index for the questions</b>Equality, then sort, then range. Every index is a bet on how the system is used, and every write pays for it.</div>
+  <div><b>Treat AI memory as data</b>Persist what matters, expire what doesn't, and make every action explainable from a record.</div>
+</div>
+
+<div class="grid">
+<div>
+<h2>1 · The questions, before the schema</h2>
+<ul>
+<li>What runs are active for this project?</li>
+<li>What changed since the last good run?</li>
+<li>Which jobs are still pending?</li>
+<li>Which actions were approved by a human?</li>
+<li>What previous failure looks like this one?</li>
+</ul>
+
+<h2>2 · One run = one document</h2>
+<pre>{ runId: "run-1842", projectId: "project-512482", orgId: "org-71",
+  objective: { metric: "accuracy", target: 0.92 },
+  status: "training",
+  configuration: { windowMs: 2000, learningRate: 0.001 },
+  jobs: [ { jobId: "job-203", type: "training", status: "running" } ],
+  results: { accuracy: 0.89, latencyMs: 14 },
+  approvals: [ { action: "train", by: "human", at: ... } ],
+  createdAt: ..., updatedAt: ... }</pre>
+<p><span class="q">What grows without bound? What changes every few seconds? What needs a history, not a field?</span> Embed what is small, bounded and read with the parent (config snapshot, latest result, current status). Reference what is large, unbounded or shared (job events, training logs, artifacts). Append-only log for the explanation trail (actions, status transitions, approvals).</p>
+
+<h2>3 · The question creates the index</h2>
+<pre>runs.find({ projectId: "project-512482", status: "training" })
+  → { projectId: 1, status: 1 }
+runs.find({ projectId: "project-512482" }).sort({ updatedAt: -1 }).limit(1)
+  → { projectId: 1, updatedAt: -1 }</pre>
+<p>Check with <code>explain("executionStats")</code>: keys examined should equal documents returned. The trade: every status update now maintains both indexes.</p>
+</div>
+
+<div>
+<h2>4 · From polling to events</h2>
+<pre>pipeline = [{"$match": {"operationType": "update",
+  "updateDescription.updatedFields.status": {"$in": ["completed","failed"]}}}]
+with runs.watch(pipeline, full_document="updateLookup",
+                resume_after=saved_token) as cs:
+    for change in cs:
+        run = change["fullDocument"]
+        agent.resume(thread_id=run["runId"])
+        save(change["_id"])          # the resume token</pre>
+<p>The job updates its own document; the database rings the doorbell; the consumer resumes the agent. Design the failure path: resume token for downtime, idempotent handler for duplicates, a scan by <code>updatedAt</code> past the oplog window.</p>
+
+<h2>5 · Memory has a half-life</h2>
+<pre>db.sessions.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 })
+// the writer stamps expiresAt per document, at write time</pre>
+<p><b>Short-term</b> (temp job state, session context, cache, tool outputs): expire. <b>Long-term</b> (audit history, summaries, approvals, baselines): keep, index, audit. Raw logs and failed attempts: review, then decide. TTL sweeps about once a minute and never applies to audit.</p>
+
+<h2>6 · An agent that can act must be explainable</h2>
+<pre>{ action: "start_training", requestedBy: "agent", approvedBy: "eoin",
+  scope: { orgId: "org-71", projectId: "project-512482" },
+  decision: "approved", policyId: "train-non-destructive",
+  reason: "non-destructive training run", at: ISODate(...) }</pre>
+<p>A schema refuses actions outside the vocabulary at insert. A governor reads the policy collection before approving. Every decision lands in an audit collection. The approval record is also the lock: one conditional update from approved to executing wins.</p>
+
+<h2>Monday</h2>
+<ul>
+<li><b>Developer:</b> give every workflow a document and a thread id; replace one polling loop with a change stream.</li>
+<li><b>Architect:</b> put a state layer between tools and the world; decide embed vs reference by read pattern.</li>
+<li><b>Platform lead:</b> index from the query log; make lifetimes a schema decision; keep audit and approvals out of the expiry list.</li>
+<li><b>Manager:</b> ask one question of any agent project: can it explain what it did? If the answer is not a collection, it is not ready.</li>
+</ul>
+</div>
+</div>
+
+<div class="foot">
+  <span>Demos, lab, FAQ and slides: github.com/eoinjordan/what-should-a-local-agent-remember · runs on MongoDB Community, shown on a RUBIK Pi 3 (Qualcomm QCS6490), Ubuntu 24.04</span>
+  <span>CC BY 4.0</span>
+</div>
+</body></html>

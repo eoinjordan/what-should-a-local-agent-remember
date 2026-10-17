@@ -1,0 +1,19 @@
+# A single-node MongoDB replica set on localhost:27017, which is what change streams and the demo kit need.
+#   docker compose up -d      start (the first start also runs rs.initiate)
+#   docker compose down -v    stop and forget the data
+services:
+  mongo:
+    image: mongo:8.0
+    command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "try { rs.status().ok } catch (e) { rs.initiate({_id: 'rs0', members: [{_id: 0, host: '127.0.0.1:27017'}]}).ok }"]
+      interval: 5s
+      timeout: 10s
+      retries: 12
+      start_period: 5s
+volumes:
+  mongo-data:
