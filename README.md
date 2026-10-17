@@ -9,7 +9,7 @@ The talk's argument in three lines: **model for the workload** (start with the q
 | If you want to | Open |
 |---|---|
 | Watch the talk (25 min, narrated) | [video/what-should-a-local-agent-remember.mp4](video/what-should-a-local-agent-remember.mp4), chapters in [video/chapters.md](video/chapters.md) |
-| Read the slides | [slides/what-should-a-local-agent-remember.pdf](slides/what-should-a-local-agent-remember.pdf), or the [web viewer](docs/index.html) (`docs/` is ready for GitHub Pages) |
+| Read the slides | [slides/what-should-a-local-agent-remember.pdf](slides/what-should-a-local-agent-remember.pdf), or the [web viewer](https://eoinjordan.github.io/what-should-a-local-agent-remember/) (served from `docs/` by GitHub Pages) |
 | Keep one page | [handout/handout.pdf](handout/handout.pdf): the three takeaways, the run document, the two indexes, the consumer, the TTL and the approval record |
 | Run the demos | [demo/](demo/README.md): one `docker compose up` for the database, then one script per slide |
 | Do the 10-minute lab | [lab/](lab/README.md): five steps, each one a design habit, starter and solution for each |
