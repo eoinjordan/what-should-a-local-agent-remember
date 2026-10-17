@@ -34,7 +34,7 @@ Then follow [demo/README.md](demo/README.md) slide by slide, or start the lab.
 
 | Folder | Contents |
 |---|---|
-| `slides/` | The deck as PDF and as the original .pptx (37 slides: 23 main, 14 backup, presenter notes embedded). |
+| `slides/` | The deck as PDF and as the original .pptx (38 slides: 23 main, 15 backup, presenter notes embedded). |
 | `docs/` | The deck as a self-contained web page with keyboard navigation. Publish it with GitHub Pages from `docs/`. |
 | `handout/` | One printable page. |
 | `demo/` | The demo kit: reset, the first document, the two indexes with `explain()`, the change-stream consumer with a resume token, TTL, the structured query, the policy governor, and the resumable five-step agent. |

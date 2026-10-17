@@ -1,4 +1,4 @@
-# What Should a Local Agent Remember? — one page
+# What Should a Local Agent Remember? One page
 
 Saving state for agents running at the edge. The PDF version is `handout.pdf`.
 
