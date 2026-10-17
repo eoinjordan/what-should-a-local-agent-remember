@@ -1,5 +1,5 @@
 // Step 5 solution — the writer decides each document's lifetime; the TTL monitor enforces it; audit never gets one.
-// Run:  mongosh solutions/step5-ttl.js    then ~90 s later:  mongosh step5-ttl.js check
+// Run:  mongosh solutions/step5-ttl.js    then ~90 s later:  mongosh step5-check.js
 const d = db.getSiblingDB("agentdemo");
 d.lab_sessions.drop(); d.lab_audit.drop();
 d.lab_sessions.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 });   // 0 = expire at the time stored in expiresAt

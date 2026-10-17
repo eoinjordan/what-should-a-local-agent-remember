@@ -39,4 +39,4 @@ Open `step2-run-document.js`. It inserts a run document with blanks. Fill it fro
 
 ## Step 5 · Half-life (1 min)
 
-`step5-ttl.js` writes two session documents and one audit entry. Add the TTL index so the writer decides the lifetime per document, then confirm after about ninety seconds that only the short-lived session is gone and the audit collection still has no TTL index. Say out loud what you would put in the "review" column for your own system.
+`step5-ttl.js` writes two session documents and one audit entry. Add the TTL index so the writer decides the lifetime per document, then run `mongosh step5-check.js` after about ninety seconds to confirm that only the short-lived session is gone and the audit collection still has no TTL index. Say out loud what you would put in the "review" column for your own system.

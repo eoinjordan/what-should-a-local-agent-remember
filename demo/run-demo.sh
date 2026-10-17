@@ -37,7 +37,9 @@ check /tmp/d-gov.log "APPROVED.*start_training" "start_training approved by poli
 check /tmp/d-gov.log "REJECTED.*deploy_model" "deploy_model rejected: no policy"
 check /tmp/d-18.log "REFUSED.*delete_project" "delete_project refused by schema at insert"
 
-step "slide 15 again, after the TTL monitor has run"; sleep 75; mongosh --quiet ttl-check.js | tee /tmp/d-15b.log
+step "slide 15 again, after the TTL monitor has run (it sweeps about once a minute; waiting up to 150 s)"
+for i in $(seq 1 30); do [ "$(mongosh --quiet agentdemo --eval 'db.sessions.countDocuments()')" = "1" ] && break; sleep 5; done
+mongosh --quiet ttl-check.js | tee /tmp/d-15b.log
 check /tmp/d-15b.log "sessions now: 1" "sess-1842 expired, sess-1841 kept"
 
 printf '\n%d passed, %d failed\n' "$PASS" "$FAIL"; [ "$FAIL" -eq 0 ]

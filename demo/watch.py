@@ -42,6 +42,11 @@ log(f"watching agentdemo.runs for status in {{completed, failed}}  "
 while True:
     try:
         with runs.watch(pipeline, full_document="updateLookup", resume_after=token) as cs:
+            if token is None:                       # first ever start: checkpoint "now", so a restart before any event
+                cs.try_next()                       # still resumes from here instead of missing what happened while down
+                token = cs.resume_token
+                checkpoints.replace_one({"_id": "watch.py"}, {"_id": "watch.py", "token": token, "at": utcnow()}, upsert=True)
+                log("   checkpoint saved (initial resume token)")
             for change in cs:
                 token = change["_id"]
                 run = change["fullDocument"]

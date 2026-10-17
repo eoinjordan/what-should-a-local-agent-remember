@@ -22,6 +22,10 @@ print(f"{dt.datetime.now():%H:%M:%S} watching ({'resuming after saved token' if 
 while True:
     try:
         with runs.watch(pipeline, full_document="updateLookup", resume_after=token) as stream:
+            if token is None:                       # first ever start: checkpoint "now", so a restart before any event
+                stream.try_next()                   # still resumes from here instead of missing what happened while down
+                token = stream.resume_token
+                checkpoints.replace_one({"_id": "step4"}, {"_id": "step4", "token": token}, upsert=True)
             for change in stream:
                 token = change["_id"]                                   # the resume token
                 run = change["fullDocument"]
