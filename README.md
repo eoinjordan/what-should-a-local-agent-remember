@@ -2,6 +2,8 @@
 
 Saving state for agents running at the edge. Materials from a talk by Eoin Jordan, shared so you can re-run every demo on your own machine, do the lab, and take the design habits back to your own agent.
 
+In one sentence: learning how to use MongoDB to hold short-term and long-term memory state for local and remote agentic AI projects, with practical notes from factory automation: lessons learned, and how to bring the pattern into the systems you already run.
+
 The talk's argument in three lines: **model for the workload** (start with the questions the agent will ask when things go wrong), **index for the questions** (every index is a trade), and **treat AI memory as data** (persist what matters, expire what doesn't, make every action explainable). Everything was shown live on a RUBIK Pi 3 single-board computer running Ubuntu 24.04 and MongoDB 9.0 Community Edition, with no cloud behind it.
 
 ## Start here
