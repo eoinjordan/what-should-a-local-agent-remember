@@ -59,7 +59,6 @@ Runs every demo step without a terminal, including the resume-token path and the
 | `captures/` | Screenshots and GIFs of each demo step as it ran on the Pi. |
 | `course-on-pi/` | The MongoDB University "AI Agents with MongoDB" code arranged to run on self-managed MongoDB without paid APIs. |
 | `animations/` | The diagram animations from the slides as HTML and GIF. |
-| `video/` | Chapter list of the narrated run-through. The recording is available on request. |
 
 ![Exact and semantic questions on one collection: a find on three fields, and a vector search over the stored embedding](animations/gifs/semantic.gif)
 
