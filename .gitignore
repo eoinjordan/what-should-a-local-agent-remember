@@ -9,6 +9,10 @@ Thumbs.db
 # presenter-only material stays local
 study/
 *.mp4
-/what-should-a-local-agent-remember.pdf
-/what-should-a-local-agent-remember.pptx
 video/
+# presentation sources live in the presenter repo
+docs/
+animations/
+captures/
+diagrams/
+*.pptx
