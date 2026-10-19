@@ -35,7 +35,7 @@ class D:
         st = (f"edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=10;html=1;strokeColor={color};strokeWidth={width};"
               f"exitX={exit[0]};exitY={exit[1]};entryX={entry[0]};entryY={entry[1]};exitPerimeter=0;entryPerimeter=0;"
               f"endArrow={'blockThin' if arrow else 'none'};endFill=1;endSize=7;jettySize=auto;"
-              + ("dashed=1;dashPattern=6 4;" if dashed else "") + f"fontColor={MUTED};fontSize=12;labelBackgroundColor=none;" + FONT)
+              + ("dashed=1;dashPattern=6 4;" if dashed else "") + f"fontColor={MUTED};fontSize=12;labelBackgroundColor=#FFFFFF;labelBorderColor=none;spacing=2;" + FONT)
         i = self._id(); self.cells.append(("edge", i, a, b, st, points or [], label)); return i
     def write(self):
         parts = [f'<mxGraphModel grid="0" page="0" background="{NAVY if self.dark else "none"}"><root><mxCell id="0"/><mxCell id="1" parent="0"/>']
@@ -76,12 +76,16 @@ d = D("s06-leak")
 ag = d.box(0, 96, 150, 60, "Agent", fill=MINT, stroke=GREEN, bold=True); tl = d.box(220, 96, 150, 60, "Tools", bold=True)
 d.edge(ag, tl); d.edge(tl, ag, exit=(0.5, 1), entry=(0.5, 1), points=[(295, 190), (75, 190)], color=LINE)
 chips = ["block IDs", "project / org IDs", "job status", "retries", "previous config", "new result", "approval", "orphaned job"]
+chip_ids = []
 for k, nm in enumerate(chips):
     col, row = k // 4, k % 4
     x, y = 520 + col * 230, 10 + row * 66
     red = nm == "orphaned job"
     cid = d.box(x, y, 190, 44, nm, fill="#FDEDED" if red else PANEL, stroke=RED if red else LINE, color=RED if red else INK, dashed=not red, size=13)
-    d.edge(tl, cid, exit=(1, 0.5), entry=(0, 0.5), points=[(450, 126), (450, y + 22)], dashed=True, color=RED if red else LINE, width=1.2)
+    if col == 0:
+        chip_ids.append(cid); d.edge(tl, cid, exit=(1, 0.5), entry=(0, 0.5), points=[(450, 126), (450, y + 22)], dashed=True, color=LINE, width=1.2)
+    else:   # the second column hangs off the first, so no edge crosses a chip
+        d.edge(chip_ids[row], cid, exit=(1, 0.5), entry=(0, 0.5), dashed=True, color=RED if red else LINE, width=1.2)
 d.text(520, 290, 420, 30, "IDs everywhere · job timing · state management", size=13, color=MUTED)
 d.write()
 
