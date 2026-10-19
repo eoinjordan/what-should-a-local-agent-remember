@@ -10,4 +10,4 @@ Read against `data/workflow-log.jsonl`.
 
 **4. The action that needed an approval.** `delete_dataset_version` at 19:09:35. It is destructive, it was not requested by the user, and the agent cannot explain it afterwards. An approval collection with a schema that only admits a known vocabulary of actions would have refused it at insert, and a policy would have required a human decision before anything ran. Retrying a failed job with the same configuration (19:09:34) is the other one: the retry should have read the failure reason from the run's history first.
 
-The state that must persist, as a list: run id, project and org ids, configuration snapshot, current status, current job id and its status, the latest result with the job it came from, the history of status transitions and actions, and approvals. That list is the run document on slide 10.
+The state that must persist, as a list: run id, project and org ids, configuration snapshot, current status, current job id and its status, the latest result with the job it came from, the history of status transitions and actions, and approvals. That list is the run document on slide 11.

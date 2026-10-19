@@ -10,9 +10,9 @@ Routed by what you need, not by what the talk had.
 ## The four doc pages behind the talk
 
 - [Data modelling](https://www.mongodb.com/docs/manual/data-modeling/): embed, reference, and the workload-first process the talk's objective 1 follows.
-- [Change streams](https://www.mongodb.com/docs/manual/changeStreams/): the doorbell from slide 15, including resume tokens.
+- [Change streams](https://www.mongodb.com/docs/manual/changeStreams/): the doorbell from slide 16, including resume tokens.
 - [TTL indexes](https://www.mongodb.com/docs/manual/core/index-ttl/): per-document expiry with `expireAfterSeconds: 0`.
-- [Atlas Vector Search overview](https://www.mongodb.com/docs/atlas/atlas-vector-search/vector-search-overview/): the semantic half of slide 21. Self-managed Search and Vector Search for Community/Enterprise are on the [compatibility page](https://mongodb.com/docs/vector-search/deployment/compatibility-limitations/).
+- [Atlas Vector Search overview](https://www.mongodb.com/docs/atlas/atlas-vector-search/vector-search-overview/): the semantic half of slide 22. Self-managed Search and Vector Search for Community/Enterprise are on the [compatibility page](https://mongodb.com/docs/vector-search/deployment/compatibility-limitations/).
 
 ## Ask
 
@@ -23,8 +23,8 @@ Routed by what you need, not by what the talk had.
 
 - [MongoDB Agent Skills](https://www.mongodb.com/docs/agent-skills/) and the source at [github.com/mongodb/agent-skills](https://github.com/mongodb/agent-skills): schema design, query optimizer, natural-language querying, MCP setup. `npx skills add mongodb/agent-skills`, or the Claude, Codex, Cursor and Gemini plugins bundle the skills with the MCP server.
 - [MongoDB MCP Server](https://www.mongodb.com/blog/post/announcing-mongodb-mcp-server): gives a coding agent the live database, so it reads real schemas and indexes instead of guessing.
-- [Integrate MongoDB with LangGraph](https://www.mongodb.com/docs/atlas/ai-integrations/langgraph/): the checkpointer and store that backup slide 30 describes.
-- [Your database just became your AI control point](https://www.mongodb.com/company/blog/news/your-database-just-became-your-ai-control-point): the IDC framing behind slide 22.
+- [Integrate MongoDB with LangGraph](https://www.mongodb.com/docs/atlas/ai-integrations/langgraph/): the checkpointer and store that backup slide 31 describes.
+- [Your database just became your AI control point](https://www.mongodb.com/company/blog/news/your-database-just-became-your-ai-control-point): the IDC framing behind slide 23.
 
 ## Scale
 

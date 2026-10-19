@@ -36,6 +36,6 @@ You need `mongosh` and Python 3 with `pymongo` on the host (`pip install pymongo
 
 Ends with `13 passed, 0 failed` and a non-zero exit code otherwise. It takes about two minutes because it waits for the TTL monitor.
 
-## The semantic half of slide 21
+## The semantic half of slide 22
 
 `$vectorSearch` needs Atlas Vector Search or self-managed Search attached to your deployment. This kit runs on plain `mongod`, so the embedding is stored beside the record and the structured query is what runs; `../course-on-pi/` shows an exact cosine scan standing in for the index on a small collection.

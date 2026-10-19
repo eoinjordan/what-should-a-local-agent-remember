@@ -42,4 +42,4 @@ Expected: the first run calls `get_information_for_question_answering` for the b
 
 ## How this connects to the talk
 
-The course's memory lesson is slide 30 of the deck: `MongoDBSaver`, `thread_id` as the session key, state checkpointed per node transition. The "What did I just ask?" test is the thirty-second version of the Pi demo where the watcher is killed and resumes from its token. The course's two tools are the slide-21 distinction made concrete: a `find` by exact title on one side, a semantic search over the same documents on the other.
+The course's memory lesson is slide 31 of the deck: `MongoDBSaver`, `thread_id` as the session key, state checkpointed per node transition. The "What did I just ask?" test is the thirty-second version of the Pi demo where the watcher is killed and resumes from its token. The course's two tools are the slide-22 distinction made concrete: a `find` by exact title on one side, a semantic search over the same documents on the other.
