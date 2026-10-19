@@ -36,7 +36,7 @@ Then follow [demo/README.md](demo/README.md) slide by slide, or start the lab.
 
 | Folder | Contents |
 |---|---|
-| `slides/` | The deck as PDF and as the original .pptx (38 slides: 23 main, 15 backup, presenter notes embedded). |
+| `slides/` | The deck as PDF and as the original .pptx (40 slides: 23 main, 17 backup, presenter notes embedded). |
 | `docs/` | The deck as a self-contained web page with keyboard navigation. Publish it with GitHub Pages from `docs/`. |
 | `handout/` | One printable page. |
 | `demo/` | The demo kit: reset, the first document, the two indexes with `explain()`, the change-stream consumer with a resume token, TTL, the structured query, the policy governor, and the resumable five-step agent. |
@@ -44,7 +44,7 @@ Then follow [demo/README.md](demo/README.md) slide by slide, or start the lab.
 | `captures/` | Screenshots and GIFs of every demo step as it ran on the Pi. |
 | `course-on-pi/` | The MongoDB University "AI Agents with MongoDB" code arranged to run on self-managed MongoDB without paid APIs. |
 | `animations/` | The thirteen diagram animations from the slides as HTML and GIF. |
-| `video/` | The narrated run-through. |
+| `video/` | The chapter list of the narrated run-through; the recording itself is shared on request (it was recorded before the final edits to the deck). |
 
 ## Verify
 

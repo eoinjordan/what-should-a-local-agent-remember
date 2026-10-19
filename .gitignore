@@ -5,3 +5,7 @@ Thumbs.db
 .DS_Store
 ~$*.pptx
 .~lock.*#
+
+# presenter-only material stays local
+study/
+*.mp4
